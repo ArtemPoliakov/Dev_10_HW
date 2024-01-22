@@ -22,7 +22,8 @@ public class TimeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         String timeZone = Optional.ofNullable(req.getParameter("timezone")).orElse("UTC+0");
-        int timeZoneInt = Integer.parseInt(timeZone.substring(3));
+        String parsedTimeZone = timeZone.replace("+","");
+        int timeZoneInt = Integer.parseInt(parsedTimeZone.substring(3).trim());
         String time = LocalDateTime.now(ZoneOffset.ofHours(timeZoneInt)).toString();
         time = time.replace("T", " ").substring(0, TIME_WITHOUT_MILLIS_LENGTH) + " " + timeZone;
         try(PrintWriter writer = resp.getWriter()) {

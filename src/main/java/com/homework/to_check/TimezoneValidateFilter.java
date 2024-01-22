@@ -19,7 +19,7 @@ public class TimezoneValidateFilter extends HttpFilter {
 
     private static final int MAX_TIMEZONE_BOUND_FOR_LOCAL_DATE_TIME = 18;
     private static final int MIN_TIMEZONE_BOUND_FOR_LOCAL_DATE_TIME = -18;
-    private static final int WHERE_HOUR_VALUE_IS_EXPECTED_TO_START_INDEX = 4;
+    private static final int WHERE_HOUR_VALUE_IS_EXPECTED_TO_START_INDEX = 3;
     private static final String EXPECTED_PARAM_NAME = "timezone";
     private static final String INVALID_TIMEZONE_MESSAGE = "Invalid timezone";
     private static final String UNEXPECTED_ARGUMENT_MSG = "Unexpected argument -> bad request!";
@@ -53,7 +53,7 @@ public class TimezoneValidateFilter extends HttpFilter {
         }
 
         try {
-            int hourOffset = Integer.parseInt(timeZone.substring(WHERE_HOUR_VALUE_IS_EXPECTED_TO_START_INDEX));
+            int hourOffset = Integer.parseInt(timeZone.replace("+","").substring(WHERE_HOUR_VALUE_IS_EXPECTED_TO_START_INDEX).trim());
             if (hourOffset < MIN_TIMEZONE_BOUND_FOR_LOCAL_DATE_TIME || hourOffset > MAX_TIMEZONE_BOUND_FOR_LOCAL_DATE_TIME) {
                 throw new IllegalArgumentException();
             }
